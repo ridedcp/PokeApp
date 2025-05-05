@@ -31,6 +31,16 @@ class HomeViewController: UIViewController, HomeView {
         searchBar.delegate = self
         return searchBar
     }()
+    
+    private let noResultsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No results found"
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 18, weight: .medium)
+        label.isHidden = true
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +54,7 @@ class HomeViewController: UIViewController, HomeView {
     func setupLayout() {
         view.addSubview(searchBar)
         view.addSubview(tableView)
+        view.addSubview(noResultsLabel)
 
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -53,12 +64,18 @@ class HomeViewController: UIViewController, HomeView {
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            noResultsLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            noResultsLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     func loadData() {
         tableView.reloadData()
+        
+        let isEmpty = presenter?.numberOfPokemons() == 0
+        noResultsLabel.isHidden = !isEmpty
     }
     
 }
