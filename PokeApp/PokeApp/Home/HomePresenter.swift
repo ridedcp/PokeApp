@@ -69,16 +69,16 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func filterPokemons(with query: String) {
-        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        guard trimmed != self.query else { return }
+        let normalizedQuery = query.normalized
+        guard normalizedQuery != self.query else { return }
 
-        self.query = trimmed
+        self.query = normalizedQuery
 
-        if trimmed.isEmpty {
+        if normalizedQuery.isEmpty {
             pokemons = allPokemons
         } else {
             pokemons = allPokemons.filter {
-                $0.name.lowercased().hasPrefix(trimmed) == true
+                $0.name.normalized.hasPrefix(normalizedQuery) == true
             }
         }
 
