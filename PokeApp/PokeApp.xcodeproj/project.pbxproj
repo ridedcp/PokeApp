@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0AA622B1997E3607A9B7DD2E /* Pods_PokeApp_PokeAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73EC991A842FA9F4E20EF3CB /* Pods_PokeApp_PokeAppUITests.framework */; };
+		335D64132DC8CF3700C8C9D2 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 335D64122DC8CF3700C8C9D2 /* Kingfisher */; };
 		61F6D0879D6D7D93DA4EB493 /* Pods_PokeAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AE76DCD68D738421C31ACDC /* Pods_PokeAppTests.framework */; };
 		8134CB989AC27071812921B8 /* Pods_PokeApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DE6E0525FBA239B74ED1A6 /* Pods_PokeApp.framework */; };
 /* End PBXBuildFile section */
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				335D64132DC8CF3700C8C9D2 /* Kingfisher in Frameworks */,
 				8134CB989AC27071812921B8 /* Pods_PokeApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,6 +250,9 @@
 			);
 			mainGroup = 33185C6F2DC0B6A500DAD9A7;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				335D64112DC8CF3700C8C9D2 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 33185C792DC0B6A500DAD9A7 /* Products */;
 			projectDirPath = "";
@@ -686,6 +691,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		335D64112DC8CF3700C8C9D2 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		335D64122DC8CF3700C8C9D2 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 335D64112DC8CF3700C8C9D2 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 33185C702DC0B6A500DAD9A7 /* Project object */;
 }

@@ -6,14 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol HomeView: AnyObject {
-    func reloadData()
+    func loadData()
 }
 
 class HomeViewController: UIViewController, HomeView {
     
-    weak var presenter: HomePresenter?
+    var presenter: HomePresenter?
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -29,7 +30,7 @@ class HomeViewController: UIViewController, HomeView {
         
         setupLayout()
         tableView.register(PokeViewCell.self, forCellReuseIdentifier: "PokeViewCell")
-        reloadData()
+        presenter?.fetchPokemons()
     }
 
     func setupLayout() {
@@ -43,8 +44,8 @@ class HomeViewController: UIViewController, HomeView {
         ])
     }
     
-    func reloadData() {
-        presenter?.fetchPokemons()
+    func loadData() {
+        tableView.reloadData()
     }
     
 }
@@ -56,8 +57,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "PokeViewCell", for: indexPath) as? PokeViewCell {
+            if let urlString = presenter?.item(at: indexPath.row).imageUrl,
+               let url = URL(string: urlString) {
+                cell.pokeImageView.kf.setImage(with: url)
+            }
             cell.nameLabel.text = presenter?.item(at: indexPath.row).name
-            cell.pokeImageView.image = UIImage(named: presenter?.item(at: indexPath.row).url ?? "")
+
             return cell
         } else {
             return UITableViewCell()

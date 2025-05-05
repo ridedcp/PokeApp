@@ -15,13 +15,11 @@ class PokemonRepository: PokemonRepositoryProtocol {
     
     private let remoteDataSource: PokemonRemoteDataSourceProtocol
     
-    init(remoteDataSource: PokemonRemoteDataSourceProtocol = PokemonRemoteDataSource()) {
+    init(remoteDataSource: PokemonRemoteDataSourceProtocol) {
         self.remoteDataSource = remoteDataSource
     }
     
     func getPokemonList(offset: Int, limit: Int, completion: @escaping (Result<[Pokemon], Error>) -> Void) {
-        remoteDataSource.getPokemonList(offset: offset, limit: limit) { result in
-            completion(result)
-        }
+        remoteDataSource.getPokemonList(offset: offset, limit: limit, completion: completion)
     }
 }

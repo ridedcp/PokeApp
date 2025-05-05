@@ -20,7 +20,8 @@ class HomePresenter: HomePresenterProtocol {
     var pokemons: [Pokemon]
     private let usecase: GetPokemonListUseCaseProtocol
     
-    init(usecase: GetPokemonListUseCaseProtocol = GetPokemonListUseCase()) {
+    init(view: HomeView, usecase: GetPokemonListUseCaseProtocol) {
+        self.view = view
         self.usecase = usecase
         self.pokemons = []
         fetchPokemons()
@@ -40,9 +41,9 @@ class HomePresenter: HomePresenterProtocol {
             switch result {
             case .success(let pokemons):
                 self.pokemons = pokemons
-                self.view?.reloadData()
+                self.view?.loadData()
             case .failure(let error):
-                print("Error fetching Pokémon: \(error)")
+                print("Error: \(error)")
             }
         }
     }
