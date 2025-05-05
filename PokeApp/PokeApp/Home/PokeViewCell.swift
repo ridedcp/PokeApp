@@ -19,7 +19,7 @@ class PokeViewCell: UITableViewCell {
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 17, weight: .bold)
-        label.text = "Some"
+        label.text = "Some label"
         return label
     }()
 
