@@ -78,7 +78,7 @@ class HomePresenter: HomePresenterProtocol {
             pokemons = allPokemons
         } else {
             pokemons = allPokemons.filter {
-                $0.name.normalized.hasPrefix(normalizedQuery) == true
+                $0.name.normalized.contains(normalizedQuery) == true
             }
         }
 
