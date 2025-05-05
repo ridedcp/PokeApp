@@ -17,17 +17,18 @@ protocol HomePresenterProtocol {
 class HomePresenter: HomePresenterProtocol {
     
     weak var view: HomeView?
-    var pokemons: [Pokemon]
+    var pokemons: [Pokemon] = []
+    private var allPokemons: [Pokemon] = []
     private let usecase: GetPokemonListUseCaseProtocol
 
-    private var isFetching = false
+    private var query: String = ""
     private var offset = 0
     private let pageSize = 40
+    private var totalCount = 1302
 
     init(view: HomeView, usecase: GetPokemonListUseCaseProtocol) {
         self.view = view
         self.usecase = usecase
-        self.pokemons = []
         fetchPokemons()
     }
     
@@ -40,17 +41,24 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func fetchPokemons() {
-        guard !isFetching else { return }
-        isFetching = true
+        guard offset < totalCount else { return }
 
         usecase.execute(offset: offset, limit: pageSize) { [weak self] result in
             guard let self = self else { return }
-            self.isFetching = false
 
             switch result {
-            case .success(let newPokemons):
-                self.pokemons.append(contentsOf: newPokemons)
-                self.offset += self.pageSize
+            case .success(let fetched):
+                self.offset += fetched.count
+                self.allPokemons.append(contentsOf: fetched)
+                
+                if self.query.isEmpty {
+                    self.pokemons = self.allPokemons
+                } else {
+                    self.pokemons = self.allPokemons.filter {
+                        $0.name.lowercased().hasPrefix(self.query) == true
+                    }
+                }
+                
                 DispatchQueue.main.async {
                     self.view?.loadData()
                 }
@@ -58,5 +66,22 @@ class HomePresenter: HomePresenterProtocol {
                 print("Error: \(error)")
             }
         }
+    }
+    
+    func filterPokemons(with query: String) {
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard trimmed != self.query else { return }
+
+        self.query = trimmed
+
+        if trimmed.isEmpty {
+            pokemons = allPokemons
+        } else {
+            pokemons = allPokemons.filter {
+                $0.name.lowercased().hasPrefix(trimmed) == true
+            }
+        }
+
+        view?.loadData()
     }
 }
