@@ -69,5 +69,15 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let position = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let frameHeight = scrollView.frame.size.height
+
+        if position > contentHeight - frameHeight - 100 {
+            presenter?.fetchPokemons()
+        }
+    }
+    
 }
 

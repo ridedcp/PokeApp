@@ -19,7 +19,11 @@ class HomePresenter: HomePresenterProtocol {
     weak var view: HomeView?
     var pokemons: [Pokemon]
     private let usecase: GetPokemonListUseCaseProtocol
-    
+
+    private var isFetching = false
+    private var offset = 0
+    private let pageSize = 40
+
     init(view: HomeView, usecase: GetPokemonListUseCaseProtocol) {
         self.view = view
         self.usecase = usecase
@@ -36,12 +40,20 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func fetchPokemons() {
-        usecase.execute(offset: 0, limit: 40) { [weak self] result in
+        guard !isFetching else { return }
+        isFetching = true
+
+        usecase.execute(offset: offset, limit: pageSize) { [weak self] result in
             guard let self = self else { return }
+            self.isFetching = false
+
             switch result {
-            case .success(let pokemons):
-                self.pokemons = pokemons
-                self.view?.loadData()
+            case .success(let newPokemons):
+                self.pokemons.append(contentsOf: newPokemons)
+                self.offset += self.pageSize
+                DispatchQueue.main.async {
+                    self.view?.loadData()
+                }
             case .failure(let error):
                 print("Error: \(error)")
             }
