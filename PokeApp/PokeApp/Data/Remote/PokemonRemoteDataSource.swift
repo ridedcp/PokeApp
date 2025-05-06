@@ -9,6 +9,7 @@ import Foundation
 
 protocol PokemonRemoteDataSourceProtocol {
     func getPokemonList(offset: Int, limit: Int, completion: @escaping (Result<[Pokemon], Error>) -> Void)
+    func getPokemonDetail(id: Int, completion: @escaping (Result<PokemonDetail, Error>) -> Void)
 }
 
 class PokemonRemoteDataSource: PokemonRemoteDataSourceProtocol {
@@ -34,4 +35,9 @@ class PokemonRemoteDataSource: PokemonRemoteDataSourceProtocol {
             }
         }
     }
+    
+    func getPokemonDetail(id: Int, completion: @escaping (Result<PokemonDetail, Error>) -> Void) {
+        service.fetchPokemonDetail(id: id, completion: completion)
+    }
+
 }

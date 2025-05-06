@@ -109,6 +109,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let id = presenter?.item(at: indexPath.row).id {
+            let detailVC = DetailBuilder.build(id: id)
+            navigationController?.pushViewController(detailVC, animated: true)
+        }
+    }
+    
 }
 
 extension HomeViewController: UISearchBarDelegate {
