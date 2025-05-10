@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol PokemonRepositoryProtocol {
-    func getPokemonList(offset: Int, limit: Int, completion: @escaping (Result<[Pokemon], Error>) -> Void)
-}
-
 class PokemonRepository: PokemonRepositoryProtocol, PokemonDetailRepositoryProtocol {
     
     private let remoteDataSource: PokemonRemoteDataSourceProtocol

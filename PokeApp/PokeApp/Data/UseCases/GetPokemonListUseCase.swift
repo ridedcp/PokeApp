@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol GetPokemonListUseCaseProtocol {
-    func execute(offset: Int, limit: Int, completion: @escaping (Result<[Pokemon], Error>) -> Void)
-}
-
 class GetPokemonListUseCase: GetPokemonListUseCaseProtocol {
     
     private let repository: PokemonRepositoryProtocol

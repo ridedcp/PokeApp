@@ -7,7 +7,8 @@
 
 import Foundation
 
-class GetPokemonDetailUseCase {
+class GetPokemonDetailUseCase: GetPokemonDetailUseCaseProtocol {
+    
     private let repository: PokemonDetailRepositoryProtocol
 
     init(repository: PokemonDetailRepositoryProtocol) {
